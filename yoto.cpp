@@ -1,6 +1,6 @@
 #include "yoto.hpp"
-//#include <time.h> 
-//#include <list>
+#include <time.h> 
+#include <list>
 
 using namespace blit;
 
@@ -196,7 +196,7 @@ void player_control()
 // init()
 void init() 
 {
-    //srand (time(NULL));
+    srand (time(NULL));
 
     set_screen_mode(ScreenMode::hires);
 
