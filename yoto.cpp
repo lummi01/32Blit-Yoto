@@ -170,19 +170,19 @@ void update_balls()
 
 void player_control()
 {
-    if (buttons & Button::DPAD_RIGHT && p.x < 315)
+    if ((buttons & Button::DPAD_RIGHT || blit::joystick.x > 0) && p.x < 315)
     {
         p.x += 3;
     }
-    else if (buttons & Button::DPAD_LEFT && p.x > 4)
+    else if ((buttons & Button::DPAD_LEFT || blit::joystick.x < 0) && p.x > 4)
     {
         p.x -= 3;
     }
-    else if (buttons & Button::DPAD_DOWN && p.y < 235)
+    if ((buttons & Button::DPAD_DOWN || blit::joystick.y > 0) && p.y < 235)
     {
         p.y += 3;
     }
-    else if (buttons & Button::DPAD_UP && p.y > 4)
+    else if ((buttons & Button::DPAD_UP || blit::joystick.y < 0) && p.y > 4)
     {
         p.y -= 3;
     }
@@ -238,15 +238,26 @@ void render(uint32_t time)
     screen.pen = Pen(0, 0, 0);
     screen.text(std::to_string(p.sscore) + "/" + std::to_string(p.score), minimal_font, Point(4, 4));
 
+
+    // Shadow
     screen.pen = Pen(150, 150, 150);
     for (int i=0; i<game.balls; i++)
     {
         if (ball[i].is_ball)
         {
-            screen.circle(Point(ball[i].x + 3, ball[i].y + 4), game.ball_radius);
+            screen.circle(Point(ball[i].x + game.ball_radius, ball[i].y + game.ball_radius), game.ball_radius);
         }
     }
 
+    for (int i=0; i<100; i++)
+    {
+        if (cloud[i].is_cloud)
+        {
+            screen.circle(Point(cloud[i].x + (cloud[i].r / 3), cloud[i].y + (cloud[i].r / 3)), cloud[i].r);
+        }
+    }
+
+    //Balls
     screen.pen = Pen(255, 255, 255);
     for (int i=0; i<game.balls; i++)
     {
@@ -255,17 +266,7 @@ void render(uint32_t time)
             screen.circle(Point(ball[i].x, ball[i].y), game.ball_radius);
         }
     }
-
-    screen.pen = Pen(150, 150, 150);
-    for (int i=0; i<100; i++)
-    {
-        if (cloud[i].is_cloud)
-        {
-            screen.circle(Point(cloud[i].x + 3, cloud[i].y + 4), cloud[i].r);
-        }
-    }
-
-    screen.pen = Pen(255, 255, 255);
+    //CloudsS
     for (int i=0; i<100; i++)
     {
         if (cloud[i].is_cloud)
