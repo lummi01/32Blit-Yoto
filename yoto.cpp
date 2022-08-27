@@ -266,7 +266,7 @@ void render(uint32_t time)
             screen.circle(Point(ball[i].x, ball[i].y), game.ball_radius);
         }
     }
-    //CloudsS
+    //Clouds
     for (int i=0; i<100; i++)
     {
         if (cloud[i].is_cloud)
